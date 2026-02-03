@@ -454,8 +454,9 @@ shareBtn.addEventListener("click", () => {
   if(shares>=3) return;
   lastShareTime = now;
   shares++;
-  shareBtn.textContent = `Compartir ${shares}/3`;
-  window.open("https://t.me/share/url?url=😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat","_blank");
+  shareBtn.textContent = `Compartir ${shares}/3`;const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
+window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
+  
   if(shares>=3){
     cover.style.display="none";
     chatContainer.style.display="flex";
