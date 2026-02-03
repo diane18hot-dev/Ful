@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>👩🏻‍🎓FILTRADAS🔥🍒</title>
+<title>👩🏻‍🎓FILTRADAS 2026🔥🍒</title>
 <style>
 :root{
 --bg:#121212; 
@@ -258,6 +258,18 @@ header .header-overlay{
   z-index:1200;
   animation: floatFade 2.5s ease-in-out infinite;
 }
+
+/* CHAT DESBLOQUEADO MÁS PEQUEÑO */
+#chatContainer.unlocked .msg-row .avatar {
+  width:36px;
+  height:36px;
+  margin-right:8px;
+}
+#chatContainer.unlocked .msg-row .bubble {
+  font-size:13px;
+  max-width:75%;
+  padding:8px 10px;
+}
 </style>
 </head>
 <body>
@@ -266,7 +278,7 @@ header .header-overlay{
   <!-- PORTADA -->
   <div id="cover">
     <img class="group-photo" src="https://i.ibb.co/zVpbB2Kt/images-14.jpg" alt="Grupo">
-    <div class="channel-name">👩🏻‍🎓FILTRADAS🔥🍒</div>
+    <div class="channel-name">👩🏻‍🎓FILTRADAS (2026)🔥🍒</div>
     <div class="channel-sub">Grupo privado</div>
     <div class="mini-thumbs">
       <img src="https://i.postimg.cc/52L1qBtS/Screenshot-2025-08-20-21-32-57-889-com-facebook-katana.jpg" alt="Mini1">
@@ -285,7 +297,7 @@ header .header-overlay{
       <div class="chat-header-content"> 
           <img src="https://i.ibb.co/zVpbB2Kt/images-14.jpg" alt="Grupo">
         <div class="group-info">
-          <div class="group-name">👩🏻‍🎓FILTRADAS🔥🍒</div>
+          <div class="group-name">👩🏻‍🎓FILTRADAS (2026)🔥🍒</div>
           <div class="members-info" id="membersInfo">50,369 miembros, 2,875 en línea</div>
         </div>
       </div>
@@ -293,7 +305,7 @@ header .header-overlay{
 
     <main class="chat-area" id="chatArea">
 
-     
+         
 <div class="msg-row user">
   <img class="avatar" src="https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg" alt="Alejandro">
   <div class="bubble"><strong class="name name-male">Alejandro:</strong> Este grupo está increíble 😍</div>
@@ -402,6 +414,7 @@ header .header-overlay{
           <button class="unlock-btn" onclick="alert('Comparte el enlace para ver archivo');">🔒 Desbloquear 🔒</button>
         </div>
       </div>
+      
 
     </main>
 
@@ -427,6 +440,10 @@ const membersInfo = document.getElementById("membersInfo");
 const chatArea = document.getElementById("chatArea");
 const historyMsg = document.getElementById("historyMsg");
 
+// CONTADOR DE MIEMBROS REAL
+let totalMembers = 50369;
+let onlineMembers = 2875;
+
 // CLICK-SPAM PROTEGIDO
 shareBtn.addEventListener("click", () => {
   const now = Date.now();
@@ -438,10 +455,11 @@ shareBtn.addEventListener("click", () => {
   lastShareTime = now;
   shares++;
   shareBtn.textContent = `Compartir ${shares}/3`;
-  window.open("https://t.me/share/url?url=https://t.me/joinchat/KsLGDO9y1gFjYjcx&text=🔥Únete%20a%20este%20grupo%20🔥","_blank");
+  window.open("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat","_blank");
   if(shares>=3){
     cover.style.display="none";
     chatContainer.style.display="flex";
+    chatContainer.classList.add("unlocked"); // CHAT MÁS COMPACTO
     joinBtn.style.display="inline-block";
     startChatAnimation();
   }
@@ -457,15 +475,12 @@ function updateMembers(){
   let totalInc=[10,11,12,13];
   let onlineInc=[2,3];
 
-  let parts = membersInfo.textContent.split(', ');
-  let total = parseInt(parts[0].replace(/,/g,'')) + totalInc[Math.floor(Math.random()*totalInc.length)];
-  let onlineActual = parseInt(parts[1].split(' ')[0].replace(/,/g,''));
-
-  membersInfo.textContent=`${total.toLocaleString()} miembros, ${onlineActual.toLocaleString()} en línea`;
+  totalMembers += totalInc[Math.floor(Math.random()*totalInc.length)];
+  membersInfo.textContent = `${totalMembers.toLocaleString()} miembros, ${onlineMembers.toLocaleString()} en línea`;
 
   setTimeout(()=>{
-    let online = onlineActual + onlineInc[Math.floor(Math.random()*onlineInc.length)];
-    membersInfo.textContent=`${total.toLocaleString()} miembros, ${online.toLocaleString()} en línea`;
+    onlineMembers += onlineInc[Math.floor(Math.random()*onlineInc.length)];
+    membersInfo.textContent = `${totalMembers.toLocaleString()} miembros, ${onlineMembers.toLocaleString()} en línea`;
   },1500);
 }
 setInterval(updateMembers,4000);
