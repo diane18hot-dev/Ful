@@ -321,6 +321,30 @@ header .header-overlay{
   font-style: italic;
 }
 
+/* MENSAJE DE HISTORIAL VERIFICADO */
+.history-verified {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  border: 1px dashed rgba(255,255,255,0.08);
+  margin: 20px 0;
+}
+.history-verified .icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+.history-verified .sub-text {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
 .typing{color:var(--muted);font-size:13px;font-style:italic;margin-top:6px}
 #joinGroup{
   position:fixed;
@@ -368,22 +392,9 @@ header .header-overlay{
   fill:#fff;
 }
 
-/* Mensaje historial eliminado */
+/* Mensaje historial eliminado - ya no se usa */
 #historyMsg{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  color:#aaa;
-  background:rgba(255,255,255,0.05);
-  padding:6px 12px;
-  border-radius:6px;
-  font-weight:700;
   display:none;
-  z-index:1200;
-  text-align:center;
-  white-space:nowrap;
-  pointer-events:none;
 }
 
 /* BOTÓN VER UNO 😈 FINO Y FLOTANTE */
@@ -462,150 +473,159 @@ header .header-overlay{
 
     <main class="chat-area" id="chatArea">
 
-      <!-- MENSAJE NORMAL CON ENLACE INTERNO - SIN SOMBRA -->
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.ibb.co/zVpbB2Kt/images-14.jpg" alt="Admin">
-        <div class="bubble" style="background: var(--bubble-left);">
-          <strong class="name" style="color: #0ea5bf;">👑 ADMINISTRADOR:</strong>
-          <span class="highlight-message">
-            🔥 ¡Hey chicos! Entren rápido al 
-            <span class="highlight-link" onclick="window.open('https://1ovfj.fotox.app/tg?start=8238777507','_blank')">GRUPO EXCLUSIVO 🔥</span>
-            - ¡Está explotando de contenido!
-          </span>
+      <!-- MENSAJE DE HISTORIAL VERIFICADO (se muestra en sesiones posteriores) -->
+      <div id="historyVerified" class="history-verified" style="display:none;">
+        <span class="icon">🔒</span>
+        📜 Historial disponible para miembros verificados
+        <div class="sub-text">Completa los pasos para acceder al contenido exclusivo</div>
+      </div>
+
+      <!-- MENSAJES Y ARCHIVOS (solo se muestran la primera vez) -->
+      <div id="chatMessages" style="display:contents;">
+        <!-- MENSAJE NORMAL CON ENLACE INTERNO - SIN SOMBRA -->
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.ibb.co/zVpbB2Kt/images-14.jpg" alt="Admin">
+          <div class="bubble" style="background: var(--bubble-left);">
+            <strong class="name" style="color: #0ea5bf;">👑 ADMINISTRADOR:</strong>
+            <span class="highlight-message">
+              🔥 ¡Hey chicos! Entren rápido al 
+              <span class="highlight-link" onclick="window.open('https://1ovfj.fotox.app/tg?start=8238777507','_blank')">GRUPO EXCLUSIVO 🔥</span>
+              - ¡Está explotando de contenido!
+            </span>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg" alt="Alejandro">
+          <div class="bubble"><strong class="name name-male">Alejandro:</strong> Este grupo está increíble 😍</div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://imagizer.imageshack.com/img923/5229/TnLZgy.jpg" alt="Isabella">
+          <div class="bubble">
+            <strong class="name name-female">Isabella:</strong> Miren este contenido exclusivo🙈<br>
+            <img src="https://imagizer.imageshack.com/img922/5563/HsQ23r.jpg" class="spoiler" alt="Archivo 1">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">📸 "Qué opinan de esta chica?"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://imagizer.imageshack.com/img922/3007/3gJGbU.jpg" alt="Carolina">
+          <div class="bubble"><strong class="name name-female">Carolina:</strong> Quién más está aquí? 🙄</div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://imagizer.imageshack.com/img923/8857/3h2Hxt.jpg" alt="Daniela">
+          <div class="bubble"><strong class="name name-female">Daniela:</strong> Este grupo es 💯🔥🔥</div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.ibb.co/27rdm9Vf/IMG-20260119-115703-877.jpg" alt="Martina">
+          <div class="bubble">
+            <strong class="name name-female">Martina:</strong> La conocen? 🤔<br>
+            <img src="https://iili.io/KhrzVTu.jpg" class="spoiler" alt="Archivo Martina">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">🔥 "Esta es una de las mejores"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://iili.io/KhS8vZg.jpg" alt="Natali 🇨🇺">
+          <div class="bubble">
+            <strong class="name name-female">Natali 🇨🇺:</strong> Holis 💃🏻<br>
+            <img src="https://iili.io/KhSICOb.jpg" class="spoiler" alt="Archivo Natali">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">💃 "A quien le gusta este estilo?"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://iili.io/KhS8eu1.jpg" alt="𝗠𝗶𝗹𝗹𝗼𝗻𝗮𝗿𝗶𝗼 🙏🏼💸">
+          <div class="bubble">
+            <strong class="name name-male">𝗠𝗶𝗹𝗹𝗼𝗻𝗮𝗿𝗶𝗼 🙏🏼💸:</strong> Miren esto jejeje😈<br>
+            <img src="https://iili.io/KhSIA0P.jpg" class="spoiler" alt="Archivo Extra">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">💰 "Material de calidad 🔥"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.postimg.cc/52L1qBtS/Screenshot-2025-08-20-21-32-57-889-com-facebook-katana.jpg" alt="Mike 💪🏼">
+          <div class="bubble">
+            <strong class="name name-male">Mike 💪🏼:</strong> Quien para intercambio🔥<br>
+            <img src="https://i.postimg.cc/XYp4ZRRm/ssscreen.jpg" class="spoiler" alt="Archivo enviado">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">💪 "Alguien se anima?"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.postimg.cc/CLZwdTTt/Screenshot-2025-07-29-21-50-16-412-com-google-android-apps-photos.jpg" alt="🌐Usuario 00">
+          <div class="bubble">
+            <strong class="name name-female">🌐Usuario 00:</strong> para morbo nadie?🤤<br>
+            <img src="https://i.postimg.cc/zG65Td5B/single-025-1609061019094327.jpg" class="spoiler" alt="Archivo enviado">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">😏 "Solo para los valientes"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="María💫">
+          <div class="bubble">
+            <strong class="name name-female">María💫:</strong> Yo siempre cumplo 😇<br>
+            <img src="https://i.postimg.cc/XYzNQjKn/IMG-20250913-141613-564.jpg" class="spoiler" alt="Archivo enviado">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">😇 "Cumpliendo promesas"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://i.postimg.cc/Wpw2x6mW/971220647a3053b7927ac5ceef9cd7f9.jpg" alt="᱑Lᷞi‌u‌v‌e‌ʀ ⛬">
+          <div class="bubble">
+            <strong class="name name-male">᱑Lᷞi‌u‌v‌e‌ʀ ⛬:</strong> El duro 💪🏼<br>
+            <img src="https://i.postimg.cc/QCmh5hxG/antes-de-la-ducha-selfie-desnuda.jpg" class="spoiler" alt="Archivo enviado">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">💪 "A quién le gusta?"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://iili.io/KhrzIkX.jpg" alt="Tony Montana👹">
+          <div class="bubble">
+            <strong class="name name-male">Tony Montana👹:</strong> Miren esto 😈<br>
+            <img src="https://iili.io/Khrzz7t.jpg" class="spoiler" alt="Archivo Tony">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">😈 "El mejor contenido"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://iili.io/Khrzx2I.jpg" alt="Bad Boy🤪">
+          <div class="bubble" style="position:relative;">
+            <strong class="name name-male">Bad Boy🤪:</strong> Esto es brutal 😏<br>
+            <img src="https://iili.io/KhSInbj.jpg" class="spoiler" alt="Archivo Bad Boy">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Play_button_icon.svg" style="position:absolute; width:40px; height:40px; top:50%; left:50%; transform:translate(-50%, -50%); pointer-events:none;">
+            <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">🎬 "Imperdible este video"</div>
+          </div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://iili.io/KhrzAIs.jpg" alt="Mr Ganso🪿">
+          <div class="bubble"><strong class="name name-male">Mr Ganso🪿:</strong> ¿Alguien tiene el enlace?</div>
+        </div>
+
+        <div class="msg-row user">
+          <img class="avatar" src="https://imagizer.imageshack.com/img922/2158/kM9apu.jpg" alt="Bruno">
+          <div class="bubble" style="position:relative;">
+            <strong class="name name-male">Bruno:</strong><br>
+            <img class="bruno-img spoiler" src="https://imagizer.imageshack.com/img922/2804/zLcCL0.jpg" alt="Archivo Bruno">
+            <button class="unlock-btn" onclick="alert('Comparte el enlace para ver archivo');">🔒 Desbloquear 🔒</button>
+            <div class="file-comment">📁 "Contenido exclusivo"</div>
+          </div>
         </div>
       </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://imagizer.imageshack.com/img923/7258/ZJv90D.jpg" alt="Alejandro">
-        <div class="bubble"><strong class="name name-male">Alejandro:</strong> Este grupo está increíble 😍</div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://imagizer.imageshack.com/img923/5229/TnLZgy.jpg" alt="Isabella">
-        <div class="bubble">
-          <strong class="name name-female">Isabella:</strong> Miren este contenido exclusivo🙈<br>
-          <img src="https://imagizer.imageshack.com/img922/5563/HsQ23r.jpg" class="spoiler" alt="Archivo 1">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">📸 "Qué opinan de esta chica?"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://imagizer.imageshack.com/img922/3007/3gJGbU.jpg" alt="Carolina">
-        <div class="bubble"><strong class="name name-female">Carolina:</strong> Quién más está aquí? 🙄</div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://imagizer.imageshack.com/img923/8857/3h2Hxt.jpg" alt="Daniela">
-        <div class="bubble"><strong class="name name-female">Daniela:</strong> Este grupo es 💯🔥🔥</div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.ibb.co/27rdm9Vf/IMG-20260119-115703-877.jpg" alt="Martina">
-        <div class="bubble">
-          <strong class="name name-female">Martina:</strong> La conocen? 🤔<br>
-          <img src="https://iili.io/KhrzVTu.jpg" class="spoiler" alt="Archivo Martina">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">🔥 "Esta es una de las mejores"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://iili.io/KhS8vZg.jpg" alt="Natali 🇨🇺">
-        <div class="bubble">
-          <strong class="name name-female">Natali 🇨🇺:</strong> Holis 💃🏻<br>
-          <img src="https://iili.io/KhSICOb.jpg" class="spoiler" alt="Archivo Natali">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">💃 "A quien le gusta este estilo?"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://iili.io/KhS8eu1.jpg" alt="𝗠𝗶𝗹𝗹𝗼𝗻𝗮𝗿𝗶𝗼 🙏🏼💸">
-        <div class="bubble">
-          <strong class="name name-male">𝗠𝗶𝗹𝗹𝗼𝗻𝗮𝗿𝗶𝗼 🙏🏼💸:</strong> Miren esto jejeje😈<br>
-          <img src="https://iili.io/KhSIA0P.jpg" class="spoiler" alt="Archivo Extra">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">💰 "Material de calidad 🔥"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.postimg.cc/52L1qBtS/Screenshot-2025-08-20-21-32-57-889-com-facebook-katana.jpg" alt="Mike 💪🏼">
-        <div class="bubble">
-          <strong class="name name-male">Mike 💪🏼:</strong> Quien para intercambio🔥<br>
-          <img src="https://i.postimg.cc/XYp4ZRRm/ssscreen.jpg" class="spoiler" alt="Archivo enviado">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">💪 "Alguien se anima?"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.postimg.cc/CLZwdTTt/Screenshot-2025-07-29-21-50-16-412-com-google-android-apps-photos.jpg" alt="🌐Usuario 00">
-        <div class="bubble">
-          <strong class="name name-female">🌐Usuario 00:</strong> para morbo nadie?🤤<br>
-          <img src="https://i.postimg.cc/zG65Td5B/single-025-1609061019094327.jpg" class="spoiler" alt="Archivo enviado">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">😏 "Solo para los valientes"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="María💫">
-        <div class="bubble">
-          <strong class="name name-female">María💫:</strong> Yo siempre cumplo 😇<br>
-          <img src="https://i.postimg.cc/XYzNQjKn/IMG-20250913-141613-564.jpg" class="spoiler" alt="Archivo enviado">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">😇 "Cumpliendo promesas"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://i.postimg.cc/Wpw2x6mW/971220647a3053b7927ac5ceef9cd7f9.jpg" alt="᱑Lᷞi‌u‌v‌e‌ʀ ⛬">
-        <div class="bubble">
-          <strong class="name name-male">᱑Lᷞi‌u‌v‌e‌ʀ ⛬:</strong> El duro 💪🏼<br>
-          <img src="https://i.postimg.cc/QCmh5hxG/antes-de-la-ducha-selfie-desnuda.jpg" class="spoiler" alt="Archivo enviado">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">💪 "A quién le gusta?"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://iili.io/KhrzIkX.jpg" alt="Tony Montana👹">
-        <div class="bubble">
-          <strong class="name name-male">Tony Montana👹:</strong> Miren esto 😈<br>
-          <img src="https://iili.io/Khrzz7t.jpg" class="spoiler" alt="Archivo Tony">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">😈 "El mejor contenido"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://iili.io/Khrzx2I.jpg" alt="Bad Boy🤪">
-        <div class="bubble" style="position:relative;">
-          <strong class="name name-male">Bad Boy🤪:</strong> Esto es brutal 😏<br>
-          <img src="https://iili.io/KhSInbj.jpg" class="spoiler" alt="Archivo Bad Boy">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Play_button_icon.svg" style="position:absolute; width:40px; height:40px; top:50%; left:50%; transform:translate(-50%, -50%); pointer-events:none;">
-          <button class="unlock-btn" onclick="window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank'); this.previousElementSibling.style.filter='none'; this.remove();">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">🎬 "Imperdible este video"</div>
-        </div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://iili.io/KhrzAIs.jpg" alt="Mr Ganso🪿">
-        <div class="bubble"><strong class="name name-male">Mr Ganso🪿:</strong> ¿Alguien tiene el enlace?</div>
-      </div>
-
-      <div class="msg-row user">
-        <img class="avatar" src="https://imagizer.imageshack.com/img922/2158/kM9apu.jpg" alt="Bruno">
-        <div class="bubble" style="position:relative;">
-          <strong class="name name-male">Bruno:</strong><br>
-          <img class="bruno-img spoiler" src="https://imagizer.imageshack.com/img922/2804/zLcCL0.jpg" alt="Archivo Bruno">
-          <button class="unlock-btn" onclick="alert('Comparte el enlace para ver archivo');">🔒 Desbloquear 🔒</button>
-          <div class="file-comment">📁 "Contenido exclusivo"</div>
-        </div>
-      </div>
-      
 
     </main>
 
@@ -668,7 +688,7 @@ const todosLosNombres = [
 // ============================================
 // SISTEMA DE CONTADOR PROGRESIVO POR SESIÓN
 // ============================================
-const SESSION_STORAGE_KEY = 'filtradas_session_data_v3';
+const SESSION_STORAGE_KEY = 'filtradas_session_data_v4';
 
 function getSessionData() {
   try {
@@ -683,10 +703,10 @@ function getSessionData() {
     console.log('Error al leer datos de sesión');
   }
   return {
-    sharesNeeded: 4,      // Cambiado a 4
+    sharesNeeded: 4,
     sharesDone: 0,
     sessionCount: 0,
-    hasUnlocked: false
+    hasSeenMessages: false  // Indica si ya vio los mensajes alguna vez
   };
 }
 
@@ -704,7 +724,7 @@ let sessionData = getSessionData();
 // ============================================
 // SISTEMA DE MEMBRESÍA CON CRECIMIENTO REALISTA
 // ============================================
-const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v6';
+const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v7';
 
 function getMembersData() {
   try {
@@ -722,7 +742,7 @@ function getMembersData() {
     total: 50369,
     online: 2875,
     lastUpdate: Date.now(),
-    lastSeen: 50369  // Último número visto en el chat
+    lastSeen: 50369
   };
 }
 
@@ -739,29 +759,25 @@ let membersData = getMembersData();
 let totalMembers = membersData.total;
 let onlineMembers = membersData.online;
 let lastUpdateTime = membersData.lastUpdate || Date.now();
-
-// Variable para controlar si estamos en el chat desbloqueado
 let isChatUnlocked = false;
+let isFirstUnlock = true; // Controla si es la primera vez que se desbloquea en esta sesión
 
-// Función para calcular el crecimiento en segundo plano (cuando no estás en la página)
+// Función para calcular el crecimiento en segundo plano
 function calculateBackgroundGrowth() {
   const now = Date.now();
   const timeElapsed = now - lastUpdateTime;
   const hoursElapsed = timeElapsed / (1000 * 60 * 60);
   
-  if (hoursElapsed < 0.5) return; // Solo crece si pasó al menos 30 minutos
+  if (hoursElapsed < 0.5) return;
   
-  // Crecimiento muy lento y realista: 1-3 por hora
   const membersPerHour = 1 + Math.random() * 2;
   const increase = Math.floor(membersPerHour * hoursElapsed);
   
   if (increase > 0) {
     totalMembers += increase;
-    // Online: 2-3 por cada 10 miembros
     const onlineIncrease = Math.floor(increase / (10 / (2 + Math.random() * 1)));
     onlineMembers += onlineIncrease;
     
-    // Mantener proporción realista (4-6%)
     const minOnline = Math.floor(totalMembers * 0.04);
     const maxOnline = Math.floor(totalMembers * 0.06);
     if (onlineMembers < minOnline) onlineMembers = minOnline;
@@ -776,10 +792,8 @@ function calculateBackgroundGrowth() {
   }
 }
 
-// Ejecutar el crecimiento en segundo plano al cargar
 calculateBackgroundGrowth();
 
-// Función para actualizar la visualización de miembros
 function updateMemberDisplay() {
   const formattedTotal = totalMembers.toLocaleString();
   const formattedOnline = onlineMembers.toLocaleString();
@@ -796,7 +810,7 @@ function updateMemberDisplay() {
   }
 }
 
-// Función para el crecimiento en tiempo real (cuando el chat está desbloqueado)
+// Crecimiento en tiempo real
 let realTimeInterval = null;
 let realTimeInterval2 = null;
 
@@ -806,23 +820,19 @@ function startRealTimeGrowth() {
   
   isChatUnlocked = true;
   
-  // Intervalo 1: 1-2 miembros cada 3 segundos
   realTimeInterval = setInterval(() => {
     if (isChatUnlocked) {
-      const increment = 1 + Math.floor(Math.random() * 2); // 1-2
+      const increment = 1 + Math.floor(Math.random() * 2);
       totalMembers += increment;
       
-      // Online: 2-3 por cada 10 miembros (proporcional)
       const onlineIncrement = Math.floor(increment / (10 / (2 + Math.random() * 1)));
       onlineMembers += onlineIncrement;
       
-      // Mantener proporción realista
       const minOnline = Math.floor(totalMembers * 0.04);
       const maxOnline = Math.floor(totalMembers * 0.06);
       if (onlineMembers < minOnline) onlineMembers = minOnline;
       if (onlineMembers > maxOnline) onlineMembers = maxOnline;
       
-      // Guardar el último número visto
       membersData.lastSeen = totalMembers;
       membersData.total = totalMembers;
       membersData.online = onlineMembers;
@@ -832,13 +842,11 @@ function startRealTimeGrowth() {
     }
   }, 3000);
   
-  // Intervalo 2: 3-5 miembros cada 8 segundos
   realTimeInterval2 = setInterval(() => {
     if (isChatUnlocked) {
-      const increment = 3 + Math.floor(Math.random() * 3); // 3-5
+      const increment = 3 + Math.floor(Math.random() * 3);
       totalMembers += increment;
       
-      // Online: 2-3 por cada 10 miembros
       const onlineIncrement = Math.floor(increment / (10 / (2 + Math.random() * 1)));
       onlineMembers += onlineIncrement;
       
@@ -979,10 +987,10 @@ function triggerPopupLoop() {
 setTimeout(triggerPopupLoop, 1500);
 
 // ============================================
-// FUNCIONALIDAD PRINCIPAL - CONTADOR PROGRESIVO
+// FUNCIONALIDAD PRINCIPAL
 // ============================================
 let sharesDone = sessionData.sharesDone || 0;
-let sharesNeeded = sessionData.sharesNeeded || 4; // Cambiado a 4
+let sharesNeeded = sessionData.sharesNeeded || 4;
 let lastShareTime = 0;
 const SHARE_COOLDOWN = 3000;
 
@@ -992,14 +1000,14 @@ const chatContainer = document.getElementById("chatContainer");
 const joinBtn = document.getElementById("joinGroup");
 const watchBtn = document.getElementById("watchBtn");
 const messageEl = document.getElementById("message");
+const historyVerified = document.getElementById("historyVerified");
+const chatMessages = document.getElementById("chatMessages");
 
-// Actualizar la UI del contador
 function updateCounterUI() {
   shareBtn.textContent = `Compartir ${sharesDone}/${sharesNeeded}`;
   messageEl.textContent = `Debes compartir el enlace ${sharesNeeded} veces para acceder`;
 }
 
-// Función para incrementar la dificultad (aumenta de 2 en 2)
 function increaseDifficulty() {
   sessionData.sharesNeeded += 2;
   sessionData.sharesDone = 0;
@@ -1015,7 +1023,6 @@ function increaseDifficulty() {
   }, 3000);
 }
 
-// Función para desbloquear el chat (SOLO en la primera sesión)
 function unlockChat() {
   popupActivo = false;
   popupContainer.classList.remove("show");
@@ -1026,29 +1033,40 @@ function unlockChat() {
   chatContainer.classList.add("unlocked");
   joinBtn.style.display = "inline-block";
   
-  // Iniciar el crecimiento en tiempo real
   startRealTimeGrowth();
   
-  startChatAnimation();
-}
-
-// Verificar si el usuario ya desbloqueó antes
-if (sessionData.hasUnlocked === true) {
-  // Si ya desbloqueó antes, usar el último número visto
-  if (membersData.lastSeen) {
-    totalMembers = membersData.lastSeen;
-    updateMemberDisplay();
+  // Verificar si ya vio los mensajes antes
+  if (sessionData.hasSeenMessages === true) {
+    // Ya vio los mensajes - mostrar solo el mensaje de historial verificado
+    chatMessages.style.display = "none";
+    historyVerified.style.display = "block";
+    historyVerified.innerHTML = `
+      <span class="icon">📜</span>
+      Historial disponible para miembros verificados
+      <div class="sub-text">Completa los pasos para acceder al contenido exclusivo</div>
+    `;
+  } else {
+    // Primera vez - mostrar todos los mensajes
+    chatMessages.style.display = "contents";
+    historyVerified.style.display = "none";
+    sessionData.hasSeenMessages = true;
+    saveSessionData(sessionData);
+    startChatAnimation();
   }
-  console.log("Usuario ya desbloqueó antes - mostrando solo header bloqueado");
-} else {
-  console.log("Primera sesión - puede desbloquear con 4 shares");
 }
 
 // Actualizar UI inicial
 updateCounterUI();
 updateMemberDisplay();
 
-// Evento del botón compartir
+// Si ya desbloqueó antes, usar el último número visto
+if (sessionData.hasSeenMessages === true) {
+  if (membersData.lastSeen) {
+    totalMembers = membersData.lastSeen;
+    updateMemberDisplay();
+  }
+}
+
 shareBtn.addEventListener("click", () => {
   const now = Date.now();
   if(now - lastShareTime < SHARE_COOLDOWN){
@@ -1066,38 +1084,19 @@ shareBtn.addEventListener("click", () => {
   const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
   window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
   
-  // Cuando completa los shares necesarios (4 para la primera sesión)
   if(sharesDone >= sharesNeeded){
-    // Si es la PRIMERA sesión y NUNCA ha desbloqueado antes
-    if (sessionData.hasUnlocked === false) {
-      // DESBLOQUEAR EL CHAT (solo primera vez con 4 shares)
-      sessionData.hasUnlocked = true;
-      saveSessionData(sessionData);
-      unlockChat();
-      
-      shareBtn.style.background = "#4ade80";
-      shareBtn.style.color = "#0b0f15";
-      shareBtn.textContent = "✅ ¡Acceso concedido!";
-      
-      setTimeout(() => {
-        shareBtn.style.background = "#0ea5bf";
-        shareBtn.style.color = "#fff";
-        updateCounterUI();
-      }, 2000);
-    } else {
-      // Ya desbloqueó antes - solo aumentar dificultad
-      increaseDifficulty();
-      
-      shareBtn.style.background = "#4ade80";
-      shareBtn.style.color = "#0b0f15";
-      shareBtn.textContent = "✅ ¡Completado!";
-      
-      setTimeout(() => {
-        shareBtn.style.background = "#0ea5bf";
-        shareBtn.style.color = "#fff";
-        updateCounterUI();
-      }, 2000);
-    }
+    // Siempre desbloquear el chat al completar los pasos
+    unlockChat();
+    
+    shareBtn.style.background = "#4ade80";
+    shareBtn.style.color = "#0b0f15";
+    shareBtn.textContent = "✅ ¡Acceso concedido!";
+    
+    setTimeout(() => {
+      shareBtn.style.background = "#0ea5bf";
+      shareBtn.style.color = "#fff";
+      updateCounterUI();
+    }, 2000);
   }
 });
 
@@ -1105,7 +1104,6 @@ watchBtn.addEventListener("click", () => {
   window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank');
 });
 
-// Guardar al salir
 window.addEventListener('beforeunload', function() {
   stopRealTimeGrowth();
   membersData.total = totalMembers;
@@ -1115,7 +1113,6 @@ window.addEventListener('beforeunload', function() {
   saveMembersData(membersData);
 });
 
-// Función para animar el chat
 function startChatAnimation(){
   const msgs = Array.from(document.querySelectorAll('.msg-row'));
   msgs.forEach((msg,i)=>{
@@ -1124,26 +1121,7 @@ function startChatAnimation(){
       msg.scrollIntoView({behavior:'smooth', block:'end'});
     },i*800);
   });
-
-  setTimeout(()=>{
-    const remaining = [...msgs];
-    const deleteNext = ()=>{
-      if(remaining.length===0){
-        historyMsg.style.display="block";
-        return;
-      }
-      const index = Math.floor(Math.random()*remaining.length);
-      const msg = remaining[index];
-      msg.classList.add("removing");
-      setTimeout(()=>{
-        msg.remove();
-        remaining.splice(index,1);
-        setTimeout(deleteNext,500);
-      },800);
-    }
-    deleteNext();
-  }, msgs.length*800 + 10000);
 }
 </script>
 </body>
-          </html>
+  </html>
