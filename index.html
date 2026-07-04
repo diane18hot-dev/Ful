@@ -35,7 +35,7 @@ html,body{
 }
 
 /* ============================================ */
-/* POPUP DE NOTIFICACIÓN - EXTRAÍDO DEL CÓDIGO 1 */
+/* POPUP DE NOTIFICACIÓN */
 /* ============================================ */
 .popup-notification {
   position: fixed;
@@ -443,8 +443,8 @@ header .header-overlay{
       <img src="https://i.postimg.cc/R0JSYkGK/IMG-20250913-141612-888.jpg" alt="Mini3">
     </div>
     <div class="channel-info" id="coverMembersInfo">Verónica💕...🔥♥️ᎻᎧᏖ ᏰᎧᎩ♥️... y 50,369 miembros más</div>
-    <button id="shareBtn">Compartir 0/3</button>
-    <div id="message">Debes compartir el enlace 3 veces para acceder</div>
+    <button id="shareBtn">Compartir 0/4</button>
+    <div id="message">Debes compartir el enlace 4 veces para acceder</div>
   </div>
 
   <!-- CHAT -->
@@ -628,36 +628,32 @@ const nombresConEmojis = [
   "🔥 Alex G.", "😈 Sofi V.", "🍒 Dan K.", "✨ Max", "💀 Leo R.", "🌸 Mery", "🎮 John", "💎 Chris",
   "🚀 Mike", "🌈 Luna", "⭐ Emma", "🦋 Noah", "🌺 Mia", "🎯 Ethan", "🔥 Oliver", "💫 Henry",
   "🌟 Samuel", "⚡ David", "🌀 Joseph", "🎭 James", "🎪 Benjamin", "🎨 Michael", "🎵 Thomas",
-  "🎶 Nathan", "🎸 William", "🎺 Andrew", "🎻 Kevin", "🥁 Logan", "🎹 Lucas", "📱 Mason"
+  "🎶 Nathan", "🎸 Logan", "🎹 Lucas", "📱 Mason", "💻 Alex", "🖥️ Sam"
 ];
 
 // Solo iniciales (con punto)
 const soloIniciales = [
   "A. G.", "S. V.", "D. K.", "M. R.", "L. T.", "J. M.", "C. P.", "R. S.",
   "E. L.", "N. W.", "O. H.", "P. K.", "Q. Z.", "F. D.", "G. H.", "J. L.",
-  "K. M.", "L. N.", "P. Q.", "T. R.", "W. X.", "Y. Z.", "B. C.", "V. F.",
-  "X. G.", "Z. H.", "A. R.", "C. T.", "D. U.", "E. V.", "F. W."
+  "K. M.", "L. N.", "P. Q.", "T. R.", "W. X.", "Y. Z.", "B. C.", "V. F."
 ];
 
 // Solo emojis
 const nombresSoloEmojis = [
   "🔥😈💀", "🌸✨💎", "🚀🌈⭐", "🦋🌺🎯", "💫🌟⚡", "🌀🎭🎪", "🎨🎵🎶", "🎸🥁🎹",
-  "📱💻🎮", "🎯🎲🎳", "🎪🎨🎭", "🎵🎶🎼", "🥁🎸🎹", "📱💻🖥️", "🌈⭐🌙", "🔥💀😈",
-  "🌸🌺🌷", "🦋🐝🐞", "🚀🛸👽", "💎👑💍", "⚡🌀🌪️", "🎯🎯🎯", "🎪🎪🎪", "🎨🎨🎨"
+  "📱💻🎮", "🎯🎲🎳", "🎪🎨🎭", "🎵🎶🎼", "🥁🎸🎹", "🌈⭐🌙", "🔥💀😈", "🌸🌺🌷"
 ];
 
 // Nombres en árabe
 const nombresArabes = [
   "محمد", "أحمد", "علي", "حسن", "حسين", "فاطمة", "نور", "ليلى", "سارة", "مريم",
-  "خالد", "يوسف", "عمر", "عثمان", "أميرة", "رنا", "زياد", "لينا", "تامر", "ميار",
-  "رامي", "سامي", "نادين", "جمال", "كمال", "هاني", "ماني", "تينا", "لولا", "نينا"
+  "خالد", "يوسف", "عمر", "عثمان", "أميرة", "رنا", "زياد", "لينا", "تامر", "ميار"
 ];
 
 // Nombres en chino
 const nombresChinos = [
   "张伟", "王芳", "李明", "刘洋", "陈静", "杨帆", "赵磊", "黄蕾", "周涛", "吴敏",
-  "徐浩", "孙悦", "马丁", "朱婷", "胡歌", "郭靖", "林黛", "何炅", "高远", "罗志",
-  "郑爽", "梁博", "谢安", "韩雪", "唐嫣", "曹颖", "许晴", "邓超", "冯绍", "彭于"
+  "徐浩", "孙悦", "马丁", "朱婷", "胡歌", "郭靖", "林黛", "何炅", "高远", "罗志"
 ];
 
 // Combinar todos los nombres en un array
@@ -670,69 +666,46 @@ const todosLosNombres = [
 ];
 
 // ============================================
-// SISTEMA DE PERSISTENCIA - EVITA REINGRESOS
+// SISTEMA DE CONTADOR PROGRESIVO POR SESIÓN
 // ============================================
-const USER_STORAGE_KEY = 'filtradas_user_access';
-const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v3';
+const SESSION_STORAGE_KEY = 'filtradas_session_data_v3';
 
-// Verificar si el usuario ya tiene acceso
-function checkUserAccess() {
+function getSessionData() {
   try {
-    const accessData = localStorage.getItem(USER_STORAGE_KEY);
-    if (accessData) {
-      const parsed = JSON.parse(accessData);
-      if (parsed && parsed.hasAccess === true) {
-        return true;
+    const data = localStorage.getItem(SESSION_STORAGE_KEY);
+    if (data) {
+      const parsed = JSON.parse(data);
+      if (parsed && typeof parsed.sharesNeeded === 'number' && parsed.sharesNeeded >= 4) {
+        return parsed;
       }
     }
   } catch (e) {
-    console.log('Error al verificar acceso');
+    console.log('Error al leer datos de sesión');
   }
-  return false;
+  return {
+    sharesNeeded: 4,      // Cambiado a 4
+    sharesDone: 0,
+    sessionCount: 0,
+    hasUnlocked: false
+  };
 }
 
-// Guardar acceso del usuario
-function saveUserAccess() {
+function saveSessionData(data) {
   try {
-    localStorage.setItem(USER_STORAGE_KEY, JSON.stringify({
-      hasAccess: true,
-      timestamp: Date.now()
-    }));
+    localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(data));
   } catch (e) {
-    console.log('Error al guardar acceso');
+    console.log('Error al guardar datos de sesión');
   }
 }
 
-// Verificar acceso al cargar la página
-const userHasAccess = checkUserAccess();
-if (userHasAccess) {
-  // Si ya tiene acceso, mostrar directamente el chat
-  document.addEventListener('DOMContentLoaded', function() {
-    const cover = document.getElementById('cover');
-    const chatContainer = document.getElementById('chatContainer');
-    const joinBtn = document.getElementById('joinGroup');
-    const popupContainer = document.getElementById('popupContainer');
-    
-    if (cover) cover.style.display = 'none';
-    if (chatContainer) {
-      chatContainer.style.display = 'flex';
-      chatContainer.classList.add('unlocked');
-    }
-    if (joinBtn) joinBtn.style.display = 'inline-block';
-    if (popupContainer) {
-      popupContainer.classList.remove('show');
-      popupContainer.style.display = 'none';
-    }
-    
-    // Iniciar incremento de miembros
-    startMemberIncrement();
-    startChatAnimation();
-  });
-}
+// Inicializar datos de sesión
+let sessionData = getSessionData();
 
 // ============================================
-// SISTEMA DE MEMBRESÍA PERSISTENTE
+// SISTEMA DE MEMBRESÍA CON CRECIMIENTO REALISTA
 // ============================================
+const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v6';
+
 function getMembersData() {
   try {
     const data = localStorage.getItem(MEMBERS_STORAGE_KEY);
@@ -747,7 +720,9 @@ function getMembersData() {
   }
   return {
     total: 50369,
-    online: 2875
+    online: 2875,
+    lastUpdate: Date.now(),
+    lastSeen: 50369  // Último número visto en el chat
   };
 }
 
@@ -763,9 +738,46 @@ function saveMembersData(data) {
 let membersData = getMembersData();
 let totalMembers = membersData.total;
 let onlineMembers = membersData.online;
-let chatDesbloqueado = false;
-let miembrosInterval = null;
-let onlineCounter = 0;
+let lastUpdateTime = membersData.lastUpdate || Date.now();
+
+// Variable para controlar si estamos en el chat desbloqueado
+let isChatUnlocked = false;
+
+// Función para calcular el crecimiento en segundo plano (cuando no estás en la página)
+function calculateBackgroundGrowth() {
+  const now = Date.now();
+  const timeElapsed = now - lastUpdateTime;
+  const hoursElapsed = timeElapsed / (1000 * 60 * 60);
+  
+  if (hoursElapsed < 0.5) return; // Solo crece si pasó al menos 30 minutos
+  
+  // Crecimiento muy lento y realista: 1-3 por hora
+  const membersPerHour = 1 + Math.random() * 2;
+  const increase = Math.floor(membersPerHour * hoursElapsed);
+  
+  if (increase > 0) {
+    totalMembers += increase;
+    // Online: 2-3 por cada 10 miembros
+    const onlineIncrease = Math.floor(increase / (10 / (2 + Math.random() * 1)));
+    onlineMembers += onlineIncrease;
+    
+    // Mantener proporción realista (4-6%)
+    const minOnline = Math.floor(totalMembers * 0.04);
+    const maxOnline = Math.floor(totalMembers * 0.06);
+    if (onlineMembers < minOnline) onlineMembers = minOnline;
+    if (onlineMembers > maxOnline) onlineMembers = maxOnline;
+    
+    lastUpdateTime = now;
+    membersData.total = totalMembers;
+    membersData.online = onlineMembers;
+    membersData.lastSeen = totalMembers;
+    membersData.lastUpdate = lastUpdateTime;
+    saveMembersData(membersData);
+  }
+}
+
+// Ejecutar el crecimiento en segundo plano al cargar
+calculateBackgroundGrowth();
 
 // Función para actualizar la visualización de miembros
 function updateMemberDisplay() {
@@ -782,53 +794,78 @@ function updateMemberDisplay() {
     const baseText = coverInfo.textContent.split('y')[0];
     coverInfo.textContent = `${baseText}y ${formattedTotal} miembros más`;
   }
-  
-  membersData.total = totalMembers;
-  membersData.online = onlineMembers;
-  saveMembersData(membersData);
 }
 
-// Función para iniciar el incremento suave de miembros
-function startMemberIncrement() {
-  if (miembrosInterval) {
-    clearInterval(miembrosInterval);
-  }
+// Función para el crecimiento en tiempo real (cuando el chat está desbloqueado)
+let realTimeInterval = null;
+let realTimeInterval2 = null;
+
+function startRealTimeGrowth() {
+  if (realTimeInterval) clearInterval(realTimeInterval);
+  if (realTimeInterval2) clearInterval(realTimeInterval2);
   
-  chatDesbloqueado = true;
-  onlineCounter = 0;
+  isChatUnlocked = true;
   
-  // Aumento más natural: 1-2 miembros por segundo
-  miembrosInterval = setInterval(() => {
-    if (chatDesbloqueado) {
-      const increment = 1 + Math.floor(Math.random() * 2);
+  // Intervalo 1: 1-2 miembros cada 3 segundos
+  realTimeInterval = setInterval(() => {
+    if (isChatUnlocked) {
+      const increment = 1 + Math.floor(Math.random() * 2); // 1-2
       totalMembers += increment;
       
-      onlineCounter += increment;
+      // Online: 2-3 por cada 10 miembros (proporcional)
+      const onlineIncrement = Math.floor(increment / (10 / (2 + Math.random() * 1)));
+      onlineMembers += onlineIncrement;
       
-      // 1 en línea por cada 8-12 miembros (más lento)
-      if (onlineCounter >= 8 + Math.floor(Math.random() * 5)) {
-        onlineMembers += 1;
-        onlineCounter = 0;
-        
-        const minOnline = Math.floor(totalMembers * 0.04);
-        const maxOnline = Math.floor(totalMembers * 0.07);
-        if (onlineMembers < minOnline) {
-          onlineMembers = minOnline;
-        } else if (onlineMembers > maxOnline) {
-          onlineMembers = maxOnline;
-        }
-      }
+      // Mantener proporción realista
+      const minOnline = Math.floor(totalMembers * 0.04);
+      const maxOnline = Math.floor(totalMembers * 0.06);
+      if (onlineMembers < minOnline) onlineMembers = minOnline;
+      if (onlineMembers > maxOnline) onlineMembers = maxOnline;
+      
+      // Guardar el último número visto
+      membersData.lastSeen = totalMembers;
+      membersData.total = totalMembers;
+      membersData.online = onlineMembers;
+      saveMembersData(membersData);
       
       updateMemberDisplay();
     }
-  }, 1000);
+  }, 3000);
+  
+  // Intervalo 2: 3-5 miembros cada 8 segundos
+  realTimeInterval2 = setInterval(() => {
+    if (isChatUnlocked) {
+      const increment = 3 + Math.floor(Math.random() * 3); // 3-5
+      totalMembers += increment;
+      
+      // Online: 2-3 por cada 10 miembros
+      const onlineIncrement = Math.floor(increment / (10 / (2 + Math.random() * 1)));
+      onlineMembers += onlineIncrement;
+      
+      const minOnline = Math.floor(totalMembers * 0.04);
+      const maxOnline = Math.floor(totalMembers * 0.06);
+      if (onlineMembers < minOnline) onlineMembers = minOnline;
+      if (onlineMembers > maxOnline) onlineMembers = maxOnline;
+      
+      membersData.lastSeen = totalMembers;
+      membersData.total = totalMembers;
+      membersData.online = onlineMembers;
+      saveMembersData(membersData);
+      
+      updateMemberDisplay();
+    }
+  }, 8000);
 }
 
-function stopMemberIncrement() {
-  chatDesbloqueado = false;
-  if (miembrosInterval) {
-    clearInterval(miembrosInterval);
-    miembrosInterval = null;
+function stopRealTimeGrowth() {
+  isChatUnlocked = false;
+  if (realTimeInterval) {
+    clearInterval(realTimeInterval);
+    realTimeInterval = null;
+  }
+  if (realTimeInterval2) {
+    clearInterval(realTimeInterval2);
+    realTimeInterval2 = null;
   }
 }
 
@@ -858,10 +895,8 @@ let popupActivo = true;
 let ultimoNombreUsado = '';
 
 function generarNombreVariado() {
-  // Filtrar para no repetir el último nombre
   let nombresDisponibles = todosLosNombres.filter(n => n !== ultimoNombreUsado);
   
-  // Si no hay nombres disponibles, reiniciar la lista
   if (nombresDisponibles.length === 0) {
     nombresDisponibles = todosLosNombres;
   }
@@ -879,9 +914,7 @@ function generatePopupHTML(type, name, randomImg) {
 
   if (type === 0) {
     wrapperClass = "user-access"; 
-    // Para nombres en árabe o chino, usar primera letra visible
     let inicial = name.charAt(0).toUpperCase();
-    // Si es emoji, usar un emoji por defecto
     if (!inicial.match(/[A-Za-z]/)) {
       inicial = "👤";
     }
@@ -946,63 +979,125 @@ function triggerPopupLoop() {
 setTimeout(triggerPopupLoop, 1500);
 
 // ============================================
-// FUNCIONALIDAD ORIGINAL
+// FUNCIONALIDAD PRINCIPAL - CONTADOR PROGRESIVO
 // ============================================
-let shares = 0;
+let sharesDone = sessionData.sharesDone || 0;
+let sharesNeeded = sessionData.sharesNeeded || 4; // Cambiado a 4
 let lastShareTime = 0;
 const SHARE_COOLDOWN = 3000;
+
 const shareBtn = document.getElementById("shareBtn");
 const cover = document.getElementById("cover");
 const chatContainer = document.getElementById("chatContainer");
 const joinBtn = document.getElementById("joinGroup");
 const watchBtn = document.getElementById("watchBtn");
-const chatArea = document.getElementById("chatArea");
-const historyMsg = document.getElementById("historyMsg");
+const messageEl = document.getElementById("message");
 
-// Actualizar display inicial
+// Actualizar la UI del contador
+function updateCounterUI() {
+  shareBtn.textContent = `Compartir ${sharesDone}/${sharesNeeded}`;
+  messageEl.textContent = `Debes compartir el enlace ${sharesNeeded} veces para acceder`;
+}
+
+// Función para incrementar la dificultad (aumenta de 2 en 2)
+function increaseDifficulty() {
+  sessionData.sharesNeeded += 2;
+  sessionData.sharesDone = 0;
+  sessionData.sessionCount += 1;
+  sharesDone = 0;
+  sharesNeeded = sessionData.sharesNeeded;
+  saveSessionData(sessionData);
+  updateCounterUI();
+  
+  messageEl.textContent = `⚠️ Requisito aumentado: necesitas ${sharesNeeded} compartidos ahora`;
+  setTimeout(() => {
+    messageEl.textContent = `Debes compartir el enlace ${sharesNeeded} veces para acceder`;
+  }, 3000);
+}
+
+// Función para desbloquear el chat (SOLO en la primera sesión)
+function unlockChat() {
+  popupActivo = false;
+  popupContainer.classList.remove("show");
+  popupContainer.style.display = "none";
+  
+  cover.style.display = "none";
+  chatContainer.style.display = "flex";
+  chatContainer.classList.add("unlocked");
+  joinBtn.style.display = "inline-block";
+  
+  // Iniciar el crecimiento en tiempo real
+  startRealTimeGrowth();
+  
+  startChatAnimation();
+}
+
+// Verificar si el usuario ya desbloqueó antes
+if (sessionData.hasUnlocked === true) {
+  // Si ya desbloqueó antes, usar el último número visto
+  if (membersData.lastSeen) {
+    totalMembers = membersData.lastSeen;
+    updateMemberDisplay();
+  }
+  console.log("Usuario ya desbloqueó antes - mostrando solo header bloqueado");
+} else {
+  console.log("Primera sesión - puede desbloquear con 4 shares");
+}
+
+// Actualizar UI inicial
+updateCounterUI();
 updateMemberDisplay();
 
+// Evento del botón compartir
 shareBtn.addEventListener("click", () => {
-  // Si ya tiene acceso, solo compartir sin contar
-  if (userHasAccess) {
-    const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
-    window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
-    return;
-  }
-  
   const now = Date.now();
   if(now - lastShareTime < SHARE_COOLDOWN){
     alert("Espera unos segundos y vuelve a compartir");
     return;
   }
-  if(shares>=3) {
-    // Ya tiene acceso, compartir sin contar
-    const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
-    window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
-    return;
-  }
   
   lastShareTime = now;
-  shares++;
-  shareBtn.textContent = `Compartir ${shares}/3`;
+  sharesDone++;
+  sessionData.sharesDone = sharesDone;
+  saveSessionData(sessionData);
+  
+  updateCounterUI();
+  
   const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
   window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
   
-  if(shares>=3){
-    // Guardar acceso del usuario
-    saveUserAccess();
-    
-    popupActivo = false;
-    popupContainer.classList.remove("show");
-    popupContainer.style.display = "none";
-    
-    cover.style.display="none";
-    chatContainer.style.display="flex";
-    chatContainer.classList.add("unlocked");
-    joinBtn.style.display="inline-block";
-    
-    startMemberIncrement();
-    startChatAnimation();
+  // Cuando completa los shares necesarios (4 para la primera sesión)
+  if(sharesDone >= sharesNeeded){
+    // Si es la PRIMERA sesión y NUNCA ha desbloqueado antes
+    if (sessionData.hasUnlocked === false) {
+      // DESBLOQUEAR EL CHAT (solo primera vez con 4 shares)
+      sessionData.hasUnlocked = true;
+      saveSessionData(sessionData);
+      unlockChat();
+      
+      shareBtn.style.background = "#4ade80";
+      shareBtn.style.color = "#0b0f15";
+      shareBtn.textContent = "✅ ¡Acceso concedido!";
+      
+      setTimeout(() => {
+        shareBtn.style.background = "#0ea5bf";
+        shareBtn.style.color = "#fff";
+        updateCounterUI();
+      }, 2000);
+    } else {
+      // Ya desbloqueó antes - solo aumentar dificultad
+      increaseDifficulty();
+      
+      shareBtn.style.background = "#4ade80";
+      shareBtn.style.color = "#0b0f15";
+      shareBtn.textContent = "✅ ¡Completado!";
+      
+      setTimeout(() => {
+        shareBtn.style.background = "#0ea5bf";
+        shareBtn.style.color = "#fff";
+        updateCounterUI();
+      }, 2000);
+    }
   }
 });
 
@@ -1010,13 +1105,17 @@ watchBtn.addEventListener("click", () => {
   window.open('https://reportallege.com/q47hx05r8?key=db8cabb639b2035bd1ba0bc45e43db5a','_blank');
 });
 
+// Guardar al salir
 window.addEventListener('beforeunload', function() {
-  stopMemberIncrement();
+  stopRealTimeGrowth();
   membersData.total = totalMembers;
   membersData.online = onlineMembers;
+  membersData.lastSeen = totalMembers;
+  membersData.lastUpdate = Date.now();
   saveMembersData(membersData);
 });
 
+// Función para animar el chat
 function startChatAnimation(){
   const msgs = Array.from(document.querySelectorAll('.msg-row'));
   msgs.forEach((msg,i)=>{
@@ -1047,4 +1146,4 @@ function startChatAnimation(){
 }
 </script>
 </body>
-            </html>
+          </html>
