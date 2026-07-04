@@ -392,9 +392,22 @@ header .header-overlay{
   fill:#fff;
 }
 
-/* Mensaje historial eliminado - ya no se usa */
+/* Mensaje historial eliminado */
 #historyMsg{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:#aaa;
+  background:rgba(255,255,255,0.05);
+  padding:6px 12px;
+  border-radius:6px;
+  font-weight:700;
   display:none;
+  z-index:1200;
+  text-align:center;
+  white-space:nowrap;
+  pointer-events:none;
 }
 
 /* BOTÓN VER UNO 😈 FINO Y FLOTANTE */
@@ -688,7 +701,7 @@ const todosLosNombres = [
 // ============================================
 // SISTEMA DE CONTADOR PROGRESIVO POR SESIÓN
 // ============================================
-const SESSION_STORAGE_KEY = 'filtradas_session_data_v4';
+const SESSION_STORAGE_KEY = 'filtradas_session_data_v5';
 
 function getSessionData() {
   try {
@@ -706,7 +719,8 @@ function getSessionData() {
     sharesNeeded: 4,
     sharesDone: 0,
     sessionCount: 0,
-    hasSeenMessages: false  // Indica si ya vio los mensajes alguna vez
+    hasSeenMessages: false,
+    isUnlocked: false  // Nuevo: indica si el chat está desbloqueado actualmente
   };
 }
 
@@ -724,7 +738,7 @@ let sessionData = getSessionData();
 // ============================================
 // SISTEMA DE MEMBRESÍA CON CRECIMIENTO REALISTA
 // ============================================
-const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v7';
+const MEMBERS_STORAGE_KEY = 'filtradas_members_data_v8';
 
 function getMembersData() {
   try {
@@ -760,7 +774,6 @@ let totalMembers = membersData.total;
 let onlineMembers = membersData.online;
 let lastUpdateTime = membersData.lastUpdate || Date.now();
 let isChatUnlocked = false;
-let isFirstUnlock = true; // Controla si es la primera vez que se desbloquea en esta sesión
 
 // Función para calcular el crecimiento en segundo plano
 function calculateBackgroundGrowth() {
@@ -1002,6 +1015,7 @@ const watchBtn = document.getElementById("watchBtn");
 const messageEl = document.getElementById("message");
 const historyVerified = document.getElementById("historyVerified");
 const chatMessages = document.getElementById("chatMessages");
+const historyMsg = document.getElementById("historyMsg");
 
 function updateCounterUI() {
   shareBtn.textContent = `Compartir ${sharesDone}/${sharesNeeded}`;
@@ -1014,6 +1028,7 @@ function increaseDifficulty() {
   sessionData.sessionCount += 1;
   sharesDone = 0;
   sharesNeeded = sessionData.sharesNeeded;
+  sessionData.isUnlocked = false; // Resetear estado de desbloqueo
   saveSessionData(sessionData);
   updateCounterUI();
   
@@ -1055,6 +1070,38 @@ function unlockChat() {
   }
 }
 
+// Función para autoeliminar mensajes después de 10 segundos
+function startAutoDelete() {
+  const msgs = document.querySelectorAll('.msg-row');
+  if (msgs.length === 0) return;
+  
+  setTimeout(() => {
+    const remaining = Array.from(msgs);
+    let deletedCount = 0;
+    
+    const deleteNext = () => {
+      if (remaining.length === 0) {
+        // Mostrar mensaje de historial eliminado
+        historyMsg.style.display = 'block';
+        return;
+      }
+      
+      const index = Math.floor(Math.random() * remaining.length);
+      const msg = remaining[index];
+      msg.classList.add('removing');
+      
+      setTimeout(() => {
+        msg.remove();
+        remaining.splice(index, 1);
+        deletedCount++;
+        setTimeout(deleteNext, 500);
+      }, 800);
+    };
+    
+    setTimeout(deleteNext, 1000);
+  }, 10000);
+}
+
 // Actualizar UI inicial
 updateCounterUI();
 updateMemberDisplay();
@@ -1084,8 +1131,9 @@ shareBtn.addEventListener("click", () => {
   const shareText = encodeURIComponent("😈Grupo Caliente🔥 https://t.me/Prohibi2Bot/Chat");
   window.open(`https://t.me/share/url?url=&text=${shareText}`, "_blank");
   
-  if(sharesDone >= sharesNeeded){
-    // Siempre desbloquear el chat al completar los pasos
+  // SOLO desbloquear cuando sharesDone es EXACTAMENTE igual a sharesNeeded
+  if(sharesDone === sharesNeeded){
+    // Desbloquear el chat
     unlockChat();
     
     shareBtn.style.background = "#4ade80";
@@ -1095,7 +1143,8 @@ shareBtn.addEventListener("click", () => {
     setTimeout(() => {
       shareBtn.style.background = "#0ea5bf";
       shareBtn.style.color = "#fff";
-      updateCounterUI();
+      // Reiniciar el contador para la próxima sesión
+      increaseDifficulty();
     }, 2000);
   }
 });
@@ -1121,7 +1170,12 @@ function startChatAnimation(){
       msg.scrollIntoView({behavior:'smooth', block:'end'});
     },i*800);
   });
+  
+  // Iniciar autoeliminación de mensajes después de 10 segundos
+  setTimeout(() => {
+    startAutoDelete();
+  }, msgs.length * 800 + 2000);
 }
 </script>
 </body>
-  </html>
+                                                                                     </html>
